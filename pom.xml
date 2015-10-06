@@ -4,7 +4,7 @@
 
     <groupId>com.gitblit.sysinfo</groupId>
     <artifactId>sysinfo</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>SysInfo</name>
     <description>Info classes to capture details from a JVM and the underlying OS</description>
     <url>https://github.com/gitblit/sysinfo</url>
@@ -22,7 +22,7 @@
         <url>https://github.com/gitblit/sysinfo</url>
         <connection>scm:git:https://github.com/gitblit/sysinfo.git</connection>
         <developerConnection>scm:git:git@github.com:gitblit/sysinfo.git</developerConnection>
-        <tag>release-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
