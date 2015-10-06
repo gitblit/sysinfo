@@ -65,17 +65,6 @@ public class ThreadInfo implements Serializable, Comparable<ThreadInfo> {
         this.globalThreadId = buildGlobalThreadId(thread, hostAddress);
     }
 
-    static long getCurrentThreadCpuTime() {
-        return getThreadCpuTime(Thread.currentThread().getId());
-    }
-
-    static long getThreadCpuTime(long threadId) {
-        if (CPU_TIME_ENABLED) {
-            return THREAD_BEAN.getThreadCpuTime(threadId);
-        }
-        return 0;
-    }
-
     public String getName() {
         return name;
     }
@@ -147,6 +136,18 @@ public class ThreadInfo implements Serializable, Comparable<ThreadInfo> {
     @Override
     public int compareTo(ThreadInfo thread2) {
         return getName().compareToIgnoreCase(thread2.getName());
+    }
+
+
+    public static long getCurrentThreadCpuTime() {
+        return getThreadCpuTime(Thread.currentThread().getId());
+    }
+
+    public static long getThreadCpuTime(long threadId) {
+        if (CPU_TIME_ENABLED) {
+            return THREAD_BEAN.getThreadCpuTime(threadId);
+        }
+        return 0;
     }
 
     public static List<ThreadInfo> buildThreadInfoList() {
