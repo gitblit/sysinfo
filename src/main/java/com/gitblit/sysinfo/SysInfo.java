@@ -58,7 +58,10 @@ public class SysInfo implements Serializable {
     private final List<ProcessInfo> processInfoList;
 
     public SysInfo() {
-        super();
+        this(true, true);
+    }
+
+    public SysInfo(boolean collectThreadInfo, boolean collectProcessInfo) {
         startDate = START_DATE;
         host = Parameters.getHostName() + '@' + Parameters.getHostAddress();
         os = buildOS();
@@ -74,8 +77,8 @@ public class SysInfo implements Serializable {
         peakThreadCount = threadBean.getPeakThreadCount();
         totalStartedThreadCount = threadBean.getTotalStartedThreadCount();
 
-        threadInfoList = ThreadInfo.buildThreadInfoList();
-        processInfoList = ProcessInfo.buildProcessInfoList();
+        threadInfoList = collectThreadInfo ? ThreadInfo.buildThreadInfoList() : Collections.emptyList();
+        processInfoList = collectProcessInfo ? ProcessInfo.buildProcessInfoList() : Collections.emptyList();
 
         memoryInfo = new MemoryInfo();
         systemLoadAverage = buildSystemLoadAverage();

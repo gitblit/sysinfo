@@ -151,7 +151,6 @@ public class ThreadInfo implements Serializable, Comparable<ThreadInfo> {
     }
 
     public static List<ThreadInfo> buildThreadInfoList() {
-        ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
         Map<Thread, StackTraceElement[]> stackTraces = Thread.getAllStackTraces();
         List<Thread> threads = new ArrayList<>(stackTraces.keySet());
 
@@ -163,8 +162,8 @@ public class ThreadInfo implements Serializable, Comparable<ThreadInfo> {
         //		final Thread currentThread = Thread.currentThread();
         //		stackTraces = Collections.singletonMap(currentThread, currentThread.getStackTrace());
 
-        boolean cpuTimeEnabled = threadBean.isThreadCpuTimeSupported() && threadBean.isThreadCpuTimeEnabled();
-        long[] deadlockedThreads = getDeadlockedThreads(threadBean);
+        boolean cpuTimeEnabled = THREAD_BEAN.isThreadCpuTimeSupported() && THREAD_BEAN.isThreadCpuTimeEnabled();
+        long[] deadlockedThreads = getDeadlockedThreads(THREAD_BEAN);
         List<ThreadInfo> threadInfosList = new ArrayList<>(threads.size());
         // hostAddress récupéré ici car il peut y avoir plus de 20000 threads
         String hostAddress = Parameters.getHostAddress();
@@ -174,8 +173,8 @@ public class ThreadInfo implements Serializable, Comparable<ThreadInfo> {
             long cpuTimeMillis;
             long userTimeMillis;
             if (cpuTimeEnabled) {
-                cpuTimeMillis = threadBean.getThreadCpuTime(thread.getId()) / 1000000;
-                userTimeMillis = threadBean.getThreadUserTime(thread.getId()) / 1000000;
+                cpuTimeMillis = THREAD_BEAN.getThreadCpuTime(thread.getId()) / 1000000;
+                userTimeMillis = THREAD_BEAN.getThreadUserTime(thread.getId()) / 1000000;
             } else {
                 cpuTimeMillis = -1;
                 userTimeMillis = -1;
